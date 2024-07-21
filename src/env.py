@@ -52,11 +52,10 @@ class env():
         elif self.player_rect.colliderect(self.exit_rect):
             reward = 100
             self.restart()
-
         else:
             reward = -3
 
-        return reward
+        return reward, self.player_rect.x, self.player_rect.y
 
     def restart(self):
         self.bg = pygame.Surface((1000, 800))

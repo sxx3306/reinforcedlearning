@@ -1,4 +1,4 @@
-from env.env import env
+from env import env
 
 game = env()
 game.run()
