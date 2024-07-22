@@ -15,4 +15,6 @@ coords = torch.Tensor([x, y])
 
 while True:
     ans = model(coords)
-    loss.backward()
+    loss, x, y = game.step(ans[0].item(), ans[1].item())
+    optim.step()
+    coords = torch.Tensor([x, y])

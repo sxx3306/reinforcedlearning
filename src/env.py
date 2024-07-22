@@ -8,6 +8,7 @@ class env():
         self.clock = pygame.time.Clock()
 
         self.bg = pygame.Surface((1000, 800))
+        self.bg_rect = self.bg.get_rect(topleft = (0, 0))
 
         self.player = pygame.Surface((50, 50))
         self.player.fill('orange')
@@ -27,7 +28,7 @@ class env():
                 pygame.quit()
                 exit()
 
-        self.screen.blit(self.bg, (0, 0))
+        self.screen.blit(self.bg, self.bg_rect)
 
         self.player_rect.x += 1
 
@@ -52,8 +53,13 @@ class env():
         elif self.player_rect.colliderect(self.exit_rect):
             reward = 100
             self.restart()
+        elif not self.player_rect.colliderect(self.bg_rect):
+            reward = -100
+            self.restart()
         else:
             reward = -3
+
+        self.run()
 
         return reward, self.player_rect.x, self.player_rect.y
 
