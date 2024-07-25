@@ -22,6 +22,8 @@ class env():
         self.exit.fill('white')
         self.exit_rect = self.exit.get_rect(topleft = (800, 100))
 
+        self.steps = 0
+
     def run(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -45,6 +47,17 @@ class env():
         pygame.display.update()
 
     def step(self, x, y):
+        if self.steps > 1000:
+            self.restart()
+            return -100, self.player_rect.x, self.player_rect.y
+        
+        self.steps += 1
+
+        if x > 1000 or y > 800 or x < -1000 or y < -800:
+            self.run()
+            self.restart()
+            return -100, self.player_rect.x, self.player_rect.y
+
         self.player_rect.x += x
         self.player_rect.y += y
 
@@ -77,6 +90,8 @@ class env():
         self.exit = pygame.Surface((200, 600))
         self.exit.fill('white')
         self.exit_rect = self.exit.get_rect(topleft = (800, 100))
+
+        self.steps = 0
 
 if __name__ == '__main__':
     game = env()
