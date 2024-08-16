@@ -22,6 +22,13 @@ class env():
         self.exit.fill('white')
         self.exit_rect = self.exit.get_rect(topleft = (800, 100))
 
+        self.wall = pygame.Surface((50, 1000))
+        self.wall.fill('grey')
+        self.wall_rect = self.wall.get_rect(topleft = (600, 0))
+        
+        self.x_acc = 1
+        self.y_acc = 1
+
         self.steps = 0
 
     def run(self):
@@ -31,10 +38,8 @@ class env():
                 exit()
 
         self.screen.blit(self.bg, self.bg_rect)
-
-        self.player_rect.x += 1
-
         self.screen.blit(self.button, self.button_rect)
+        self.screen.blit(self.wall, self.wall_rect)
         self.screen.blit(self.exit, self.exit_rect)
 
         if self.player_rect.colliderect(self.button_rect):
@@ -53,13 +58,9 @@ class env():
         
         self.steps += 1
 
-        if x > 1000 or y > 800 or x < -1000 or y < -800:
-            self.run()
-            self.restart()
-            return -100, self.player_rect.x, self.player_rect.y
-
         self.player_rect.x += x
         self.player_rect.y += y
+
 
         if self.player_rect.colliderect(self.button_rect):
             reward = 3
@@ -95,4 +96,5 @@ class env():
 
 if __name__ == '__main__':
     game = env()
-    game.run()
+    while True:
+        game.run()
